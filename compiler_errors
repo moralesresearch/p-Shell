@@ -2,24 +2,10 @@ Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for aarch64
 Copyright (c) 1993-2021 by Florian Klaempfl and others
 Target OS: Linux for AArch64
 Compiling pShell.pas
-pShell.pas(39,3) Error: Identifier not found "Result"
-pShell.pas(62,39) Error: Identifier not found "ExtractWord"
-pShell.pas(85,11) Error: Identifier not found "ChangeDirectory"
-pShell.pas(86,11) Error: Identifier not found "ListDirectory"
-pShell.pas(87,13) Error: Identifier not found "CopyFile"
-pShell.pas(88,12) Error: Identifier not found "DisplayFileContents"
-pShell.pas(89,17) Error: Identifier not found "ShutdownSystem"
-pShell.pas(90,15) Error: Identifier not found "RebootSystem"
-pShell.pas(91,15) Error: Identifier not found "Logout"
-pShell.pas(93,13) Error: Identifier not found "DisplayFileTree"
-pShell.pas(94,15) Error: Identifier not found "MemoryCheck"
-pShell.pas(95,14) Error: Identifier not found "ClearScreen"
-pShell.pas(96,15) Error: Identifier not found "ExecutePascalInterpreter"
-pShell.pas(151,9) Error: Identifier not found "FileCopy"
-pShell.pas(346,61) Error: Identifier not found "PascalInterpreterVersion"
-pShell.pas(354,7) Error: Identifier not found "try"
-pShell.pas(355,9) Fatal: Syntax error, ";" expected but "identifier PASCALCODE" found
+pShell.pas(42,3) Error: Identifier not found "Result"
+pShell.pas(65,39) Error: Identifier not found "ExtractWordPos"
+pShell.pas(131,9) Error: Identifier not found "FileCopy"
+pShell.pas(334,7) Error: Identifier not found "try"
+pShell.pas(335,9) Fatal: Syntax error, ";" expected but "identifier PASCALCODE" found
 Fatal: Compilation aborted
 Error: /usr/bin/ppca64 returned an error exitcode
-
-
