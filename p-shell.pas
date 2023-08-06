@@ -1,8 +1,7 @@
 {$mode objfpc}{$H+}{$J-} // Just use this line in all modern sources
-program p-Shell;
+program pShell;
 
-uses
-  SysUtils, Crt;
+uses SysUtils, Crt;
 
 const
   Version = '3.3.1'; // Set the shell version number here
@@ -308,7 +307,7 @@ begin
       WriteLn('Memory check command is not supported in this OS.');
     {$ENDIF}
   {$ENDIF}
-end
+end;
 
 procedure ClearScreen;
 begin
