@@ -1,7 +1,7 @@
-{$mode objfpc}{$H+}{$J-} // Just use this line in all modern sources
-program pShell;
+program p-Shell;
 
-uses SysUtils, Crt;
+uses 
+  SysUtils, Classes, Crt;
 
 const
   Version = '3.3.1'; // Set the shell version number here
