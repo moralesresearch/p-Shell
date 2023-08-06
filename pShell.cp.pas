@@ -15,9 +15,6 @@ var
   CommandParams: array [1..5] of string;
   NumParams: Integer;
 
-const
-  PascalInterpreterVersion = '3.3'; // Set the Pascal Interpreter version number here
-
 procedure DisplayCompatibilityWarning;
 begin
   WriteLn('Warning: The current command is not supported in older versions of ', ShellName);
@@ -62,7 +59,7 @@ begin
   while Length(CommandStr) > 0 do
   begin
     Inc(ParamCount);
-    CommandParams[ParamCount] := Trim(ExtractWordPos(1, CommandStr, [' '], []));
+    CommandParams[ParamCount] := Trim(ExtractWord(1, CommandStr, [' ']));
   end;
 
   Command := CommandParams[1];
@@ -74,16 +71,39 @@ begin
   WriteLn('Shell Name: ', ShellName);
   WriteLn('Shell Version: ', Version);
   // Display the copyright notice when "version" command is executed
-  WriteLn(ShellName, ' v', Version);
-  WriteLn;
-  WriteLn('(C) 1979 Apple Inc. All rights reserved.');
-  WriteLn('(C) 2023 Morales Research Inc. All rights reserved.');
-  WriteLn;
+  DisplayCopyrightNotice;
   {$IFDEF MSWINDOWS}
     WriteLn('Operating System: Windows');
   {$ELSE}
     WriteLn('Operating System: Unix'); // Since this is a Unix-compatible p-Shell
   {$ENDIF}
+end;
+
+procedure ExecuteCommand;
+begin
+  case Command of
+    'cd': ChangeDirectory;
+    'ls': ListDirectory;
+    'copy': CopyFile;
+    'cat': DisplayFileContents;
+    'shutdown': ShutdownSystem;
+    'reboot': RebootSystem;
+    'logout': Logout;
+    'version': DisplayVersion;
+    'tree': DisplayFileTree;
+    'memchk': MemoryCheck;
+    'clear': ClearScreen;
+    'pascal': ExecutePascalInterpreter;
+    'exit': Exit; // Command to exit back to the p-Shell
+  else
+    begin
+      // Check for older versions before executing certain commands
+      if (Command = 'grep') or (Command = 'diskcopy') then
+        DisplayCompatibilityWarning
+      else
+        WriteLn('Command not recognized: ', Command);
+    end;
+  end;
 end;
 
 procedure ChangeDirectory;
@@ -366,35 +386,6 @@ begin
   else
   begin
     WriteLn('Usage: pascal <pascal_file>');
-  end;
-end;
-
-procedure ExecuteCommand;
-begin
-  case Command of
-    'cd': ChangeDirectory;
-    'ls': ListDirectory;
-    'copy': CopyFile;
-    'cat': DisplayFileContents;
-    'grep': SearchFileContents;
-    'shutdown': ShutdownSystem;
-    'reboot': RebootSystem;
-    'logout': Logout;
-    'version': DisplayVersion;
-    'tree': DisplayFileTree;
-    'memchk': MemoryCheck;
-    'clear': ClearScreen;
-    'diskcopy': DiskCopy;
-    'pascal': ExecutePascalInterpreter;
-    'exit': Exit; // Command to exit back to the p-Shell
-  else
-    begin
-      // Check for older versions before executing certain commands
-      if (Command = 'grep') or (Command = 'diskcopy') then
-        DisplayCompatibilityWarning
-      else
-        WriteLn('Command not recognized: ', Command);
-    end;
   end;
 end;
 
