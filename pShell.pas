@@ -340,35 +340,52 @@ end;
 procedure ExecutePascalInterpreter;
 var
   PascalCode: TStringList;
-  TempPascalFile: string;
-  ExecutionResult: Integer;
+  PascalFileName: string;
+  ExitCode: Integer;
 begin
-  PascalCode := TStringList.Create;
-  try
-    WriteLn('Enter your Pascal code. Type "##" on a new line and press Enter to finish:');
-    repeat
-      PascalCode.Add(ReadLn);
-    until PascalCode[PascalCode.Count - 1] = '##';
+  WriteLn('Executing Morales Research Pascal Interpreter ', PascalInterpreterVersion, '...');
 
-    TempPascalFile := GetCurrentDir + PathDelim + 'temp.pas';
-    PascalCode.SaveToFile(TempPascalFile);
-
-    WriteLn('Executing ', PascalInterpreterName, ' v', PascalInterpreterVersion, '...');
-    ExecutionResult := SysUtils.ExecuteProcess('/usr/bin/fpc', TempPascalFile, []);
-    if ExecutionResult = 0 then
+  if NumParams >= 2 then
+  begin
+    PascalFileName := CommandParams[1];
+    if FileExists(PascalFileName) then
     begin
-      WriteLn(PascalInterpreterName, ' v', PascalInterpreterVersion, ': Pascal code executed successfully.');
-      SysUtils.ExecuteProcess('./temp', '', []); // Execute the compiled program
+      PascalCode := TStringList.Create;
+      try
+        PascalCode.LoadFromFile(PascalFileName);
+        PascalCode.SaveToFile('p_shell_tmp.pas'); // Save Pascal code to a temporary file
+      finally
+        PascalCode.Free;
+      end;
+
+      // Execute the Pascal code using the compiler
+      ExitCode := ExecuteCommandAndGetExitCode('fpc -Mdelphi p_shell_tmp.pas');
+
+      if ExitCode = 0 then
+      begin
+        // Successfully compiled, run the compiled executable
+        ExecuteCommandAndGetExitCode('p_shell_tmp');
+
+        // Remove the temporary files
+        DeleteFile('p_shell_tmp.pas');
+        DeleteFile('p_shell_tmp.o');
+        DeleteFile('p_shell_tmp');
+
+        WriteLn('Pascal Interpreter executed.');
+      end
+      else
+      begin
+        WriteLn('Error: Failed to compile Pascal code.');
+      end;
     end
     else
     begin
-      WriteLn(PascalInterpreterName, ' v', PascalInterpreterVersion, ': Pascal code execution failed.');
+      WriteLn('Error: Pascal file not found: ', PascalFileName);
     end;
-
-    PascalCode.Clear;
-    DeleteFile(TempPascalFile);
-  finally
-    PascalCode.Free;
+  end
+  else
+  begin
+    WriteLn('Usage: pascal <pascal_file>');
   end;
 end;
 
