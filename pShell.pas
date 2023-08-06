@@ -47,6 +47,32 @@ begin
   CurrentPath := '/';
 end;
 
+function ExtractWord(Position: Integer; const Source: string; const Delimiter: TSysCharSet): string;
+var
+  WordStart, WordEnd: Integer;
+begin
+  Result := '';
+  WordStart := 1;
+  WordEnd := 1;
+  while (Position > 0) and (WordStart <= Length(Source)) do
+  begin
+    while (WordStart <= Length(Source)) and CharInSet(Source[WordStart], Delimiter) do
+      Inc(WordStart);
+    WordEnd := WordStart;
+    while (WordEnd <= Length(Source)) and (not CharInSet(Source[WordEnd], Delimiter)) do
+      Inc(WordEnd);
+    if WordStart <= Length(Source) then
+      Dec(Position);
+    WordStart := WordEnd + 1;
+  end;
+  if Position = 0 then
+  begin
+    Dec(WordEnd);
+    Result := Copy(Source, WordStart, WordEnd - WordStart + 1);
+  end;
+end;
+
+
 procedure ParseCommand;
 var
   CommandStr: string;
@@ -84,6 +110,35 @@ begin
   {$ELSE}
     WriteLn('Operating System: Unix'); // Since this is a Unix-compatible p-Shell
   {$ENDIF}
+end;
+
+procedure ExecuteCommand;
+begin
+  case Command of
+    'cd': ChangeDirectory;
+    'ls': ListDirectory;
+    'copy': CopyFile;
+    'cat': DisplayFileContents;
+    'grep': SearchFileContents;
+    'shutdown': ShutdownSystem;
+    'reboot': RebootSystem;
+    'logout': Logout;
+    'version': DisplayVersion;
+    'tree': DisplayFileTree;
+    'memchk': MemoryCheck;
+    'clear': ClearScreen;
+    'diskcopy': DiskCopy;
+    'pascal': ExecutePascalInterpreter;
+    'exit': Exit; // Command to exit back to the p-Shell
+  else
+    begin
+      // Check for older versions before executing certain commands
+      if (Command = 'grep') or (Command = 'diskcopy') then
+        DisplayCompatibilityWarning
+      else
+        WriteLn('Command not recognized: ', Command);
+    end;
+  end;
 end;
 
 procedure ChangeDirectory;
@@ -369,33 +424,13 @@ begin
   end;
 end;
 
-procedure ExecuteCommand;
+procedure ExecuteCommandAndGetExitCode(const ACommand: string);
 begin
-  case Command of
-    'cd': ChangeDirectory;
-    'ls': ListDirectory;
-    'copy': CopyFile;
-    'cat': DisplayFileContents;
-    'grep': SearchFileContents;
-    'shutdown': ShutdownSystem;
-    'reboot': RebootSystem;
-    'logout': Logout;
-    'version': DisplayVersion;
-    'tree': DisplayFileTree;
-    'memchk': MemoryCheck;
-    'clear': ClearScreen;
-    'diskcopy': DiskCopy;
-    'pascal': ExecutePascalInterpreter;
-    'exit': Exit; // Command to exit back to the p-Shell
-  else
-    begin
-      // Check for older versions before executing certain commands
-      if (Command = 'grep') or (Command = 'diskcopy') then
-        DisplayCompatibilityWarning
-      else
-        WriteLn('Command not recognized: ', Command);
-    end;
-  end;
+  {$IFDEF MSWINDOWS}
+    SysUtils.ExecuteProcess('cmd', '/c ' + ACommand, []);
+  {$ELSE}
+    SysUtils.ExecuteProcess('/bin/sh', '-c ' + ACommand, []);
+  {$ENDIF}
 end;
 
 begin
