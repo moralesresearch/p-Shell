@@ -1,36 +1,25 @@
 Free Pascal Compiler version 3.2.2+dfsg-9ubuntu1 [2022/04/11] for aarch64
 Copyright (c) 1993-2021 by Florian Klaempfl and others
 Target OS: Linux for AArch64
-Compiling p-shell.pas
-p-shell.pas(62,39) Error: Identifier not found "ExtractWord"
-p-shell.pas(85,11) Error: Identifier not found "ChangeDirectory"
-p-shell.pas(86,11) Error: Identifier not found "ListDirectory"
-p-shell.pas(87,13) Error: Identifier not found "CopyFile"
-p-shell.pas(88,12) Error: Identifier not found "DisplayFileContents"
-p-shell.pas(89,17) Error: Identifier not found "ShutdownSystem"
-p-shell.pas(90,15) Error: Identifier not found "RebootSystem"
-p-shell.pas(91,15) Error: Identifier not found "Logout"
-p-shell.pas(93,13) Error: Identifier not found "DisplayFileTree"
-p-shell.pas(94,15) Error: Identifier not found "MemoryCheck"
-p-shell.pas(95,14) Error: Identifier not found "ClearScreen"
-p-shell.pas(96,15) Error: Identifier not found "ExecutePascalInterpreter"
-p-shell.pas(151,9) Error: Identifier not found "FileCopy"
-p-shell.pas(342,15) Error: Identifier not found "TStringList"
-p-shell.pas(342,26) Error: Error in type definition
-p-shell.pas(346,17) Error: Identifier not found "TStringList"
-p-shell.pas(350,18) Error: Illegal qualifier
-p-shell.pas(351,22) Error: Illegal qualifier
-p-shell.pas(351,33) Error: Illegal qualifier
-p-shell.pas(354,16) Error: Illegal qualifier
-p-shell.pas(356,27) Error: Identifier not found "PascalInterpreterName"
-p-shell.pas(356,56) Error: Identifier not found "PascalInterpreterVersion"
-p-shell.pas(360,15) Error: Identifier not found "PascalInterpreterName"
-p-shell.pas(360,44) Error: Identifier not found "PascalInterpreterVersion"
-p-shell.pas(365,15) Error: Identifier not found "PascalInterpreterName"
-p-shell.pas(365,44) Error: Identifier not found "PascalInterpreterVersion"
-p-shell.pas(368,16) Error: Illegal qualifier
-p-shell.pas(371,16) Error: Illegal qualifier
-p-shell.pas(394,4) Fatal: There were 28 errors compiling module, stopping
+Compiling pShell.pas
+pShell.pas(39,3) Error: Identifier not found "Result"
+pShell.pas(62,39) Error: Identifier not found "ExtractWord"
+pShell.pas(85,11) Error: Identifier not found "ChangeDirectory"
+pShell.pas(86,11) Error: Identifier not found "ListDirectory"
+pShell.pas(87,13) Error: Identifier not found "CopyFile"
+pShell.pas(88,12) Error: Identifier not found "DisplayFileContents"
+pShell.pas(89,17) Error: Identifier not found "ShutdownSystem"
+pShell.pas(90,15) Error: Identifier not found "RebootSystem"
+pShell.pas(91,15) Error: Identifier not found "Logout"
+pShell.pas(93,13) Error: Identifier not found "DisplayFileTree"
+pShell.pas(94,15) Error: Identifier not found "MemoryCheck"
+pShell.pas(95,14) Error: Identifier not found "ClearScreen"
+pShell.pas(96,15) Error: Identifier not found "ExecutePascalInterpreter"
+pShell.pas(151,9) Error: Identifier not found "FileCopy"
+pShell.pas(346,61) Error: Identifier not found "PascalInterpreterVersion"
+pShell.pas(354,7) Error: Identifier not found "try"
+pShell.pas(355,9) Fatal: Syntax error, ";" expected but "identifier PASCALCODE" found
 Fatal: Compilation aborted
 Error: /usr/bin/ppca64 returned an error exitcode
+
 
