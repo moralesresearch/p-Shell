@@ -1,4 +1,4 @@
-program p-Shell;
+program pShell;
 
 uses 
   SysUtils, Classes, Crt;
